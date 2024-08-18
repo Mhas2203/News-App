@@ -8,6 +8,7 @@ async function fetchNewsQuery(query) {
     try {
         const apiUrl = `https://newsapi.org/v2/everything?q=${query}&pageSize=10&apiKey=${apiKey}`;
         const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         return data.articles;
     } catch (error) {
@@ -25,7 +26,7 @@ function displayBlogs(articles) {
 
         const img = document.createElement("img");
         img.src = article.urlToImage || 'default-image-url.jpg'; // Fallback if image URL is missing
-        img.alt = article.title;
+        img.alt = article.title || 'Image not available';
 
         const title = document.createElement("h2");
         const truncatedTitle = article.title.length > 30 
@@ -51,7 +52,7 @@ function displayBlogs(articles) {
 
 // Event listener for the search button
 searchButton.addEventListener("click", async () => {
-    const query = searchField.value.trim(); // Correct property to get the value
+    const query = searchField.value.trim();
     if (query !== "") {
         try {
             const articles = await fetchNewsQuery(query);
@@ -62,12 +63,12 @@ searchButton.addEventListener("click", async () => {
     }
 });
 
-// Fetch and display random news on initial load
+// Fetch and display news on initial load
 (async () => {
     try {
-        const articles = await fetchNewsQuery(''); // Default to empty query for initial load
+        const articles = await fetchNewsQuery('latest'); // Default query for initial load
         displayBlogs(articles);
     } catch (error) {
-        console.error("Error fetching random news", error);
+        console.error("Error fetching news on initial load", error);
     }
 })();
