@@ -6,11 +6,13 @@ const searchButton = document.getElementById('search-button');
 // Function to fetch news based on a query
 async function fetchNewsQuery(query) {
     try {
-        // Append a timestamp to avoid caching issues
+        // Use a timestamp to avoid caching issues
         const apiUrl = `https://newsapi.org/v2/everything?q=${query}&pageSize=10&apiKey=${apiKey}&_=${new Date().getTime()}`;
+        console.log("Fetching URL:", apiUrl); // Log the URL being fetched
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
+        console.log("Fetched Data:", data); // Log the fetched data
         return data.articles;
     } catch (error) {
         console.error("Error fetching news by query", error);
@@ -21,6 +23,9 @@ async function fetchNewsQuery(query) {
 // Function to display blogs
 function displayBlogs(articles) {
     blogContainer.innerHTML = "";
+    if (articles.length === 0) {
+        blogContainer.innerHTML = "<p>No articles found.</p>";
+    }
     articles.forEach((article) => {
         const blogCard = document.createElement("div");
         blogCard.classList.add("blog-card");
@@ -67,7 +72,7 @@ searchButton.addEventListener("click", async () => {
 // Fetch and display news on initial load
 (async () => {
     try {
-        const articles = await fetchNewsQuery('latest'); // Using a more specific query for initial load
+        const articles = await fetchNewsQuery('latest headlines'); // Use a more specific query for initial load
         displayBlogs(articles);
     } catch (error) {
         console.error("Error fetching news on initial load", error);
