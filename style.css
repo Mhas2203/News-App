@@ -1,24 +1,28 @@
+/* Reset CSS */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
+/* Body Styles */
 body {
     position: relative;
 }
 
-/* Global CSS */
+/* Global Styles */
 .obj-width {
     max-width: 1200px;
     margin: auto;
 }
 
+/* Navigation Bar Styles */
 nav {
     background-color: #2d4c50;
     box-shadow: 0 7px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Navbar Container Styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -26,6 +30,7 @@ nav {
     padding: 1.3rem 0;
 }
 
+/* Logo Styles */
 .navbar .logo {
     color: #fff;
     text-decoration: none;
@@ -33,6 +38,7 @@ nav {
     font-size: 2.2rem;
 }
 
+/* Search Input Styles */
 #search-input {
     max-width: 400px;
     padding: 10px 20px;
@@ -42,6 +48,7 @@ nav {
     color: #333;
 }
 
+/* Search Button Styles */
 #search-button {
     padding: 10px 20px;
     background-color: #138065;
@@ -53,6 +60,7 @@ nav {
     margin-left: 10px;
 }
 
+/* Blog Container Styles */
 #blog-container {
     padding: 3rem 0;
     display: flex;
@@ -61,7 +69,8 @@ nav {
     flex-wrap: wrap;
 }
 
-.blog-card{
+/* Blog Card Styles */
+.blog-card {
     width: 280px;
     border: 1px solid #2d4c50;
     border-radius: 10px;
@@ -70,12 +79,13 @@ nav {
     margin: 10px;
 }
 
-.blog-card:hover{
+/* Blog Card Hover Effect */
+.blog-card:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-.blog-card img{
+/* Blog Card Image Styles */
+.blog-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -83,30 +93,35 @@ nav {
     margin-bottom: 1rem;
 }
 
-.blog-card h2{
+/* Blog Card Title Styles */
+.blog-card h2 {
     color: #141414;
     font-size: 1.7rem;
     font-weight: 500;
 }
 
-.blog-card p{
+/* Blog Card Paragraph Styles */
+.blog-card p {
     font-size: 1.2rem;
     padding-top: 0.7rem;
 }
 
-@media(max-width: 500px){
-    nav{
+/* Responsive Styles for Mobile Devices */
+@media(max-width: 500px) {
+    nav {
         padding: 0 20px;
     }
-    
+
     .navbar .logo {
         font-size: 1.8rem;
     }
-    #search-input{
+
+    #search-input {
         width: 150px;
         padding: 10px 10px;
     }
-    .blog-card{
+
+    .blog-card {
         width: 100%;
     }
 }
