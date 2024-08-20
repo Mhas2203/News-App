@@ -11,7 +11,7 @@
 <body>
     <nav>
         <div class="navbar obj-width">
-            <a class="logo" href="index.html">News.</a>
+            <a class="logo" href="index.html">NewsNexus.</a>
             <div class="search-container">
                 <input type="text" placeholder="Search news here..." id="search-input">
                 <button id="search-button">Search</button>
@@ -41,5 +41,13 @@
         </div>
     </main>
     <script src="script.js"></script>
+    <footer>
+        <p>&copy; <span id="year"></span>NewsNexus. All rights reserved.</p>
+        <script>
+            document.getElementById('year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+    
+
 </body>
 </html>
