@@ -58,6 +58,25 @@ async function fetchSearchNews(query) {
     }
 }
 
+// Function to remove duplicate articles based on the URL
+function removeDuplicates(articles) {
+    const uniqueArticles = [];
+    const seenUrls = new Set();
+
+    // Iterate over each article
+    articles.forEach(article => {
+        // Check if the article's URL has been seen before
+        if (!seenUrls.has(article.url)) {
+            // Add the URL to the set of seen URLs
+            seenUrls.add(article.url);
+            // Add the article to the unique articles list
+            uniqueArticles.push(article);
+        }
+    });
+
+    return uniqueArticles;
+}
+
 // Function to display news articles in the UI
 function displayBlogs(articles) {
     // Clear the existing content in the blog container
@@ -81,6 +100,7 @@ function displayBlogs(articles) {
 
         // Create and configure the title element
         const title = document.createElement("h2");
+        // Truncate the title if it's too long
         const truncatedTitle = article.title.length > 30 
             ? article.title.slice(0, 30) + "..." 
             : article.title;
@@ -88,6 +108,7 @@ function displayBlogs(articles) {
 
         // Create and configure the description element
         const description = document.createElement("p");
+        // Truncate the description if it's too long
         const truncatedDes = article.description && article.description.length > 120 
             ? article.description.slice(0, 120) + "..." 
             : article.description;
@@ -111,31 +132,36 @@ function displayBlogs(articles) {
 // Event listener for the search button
 searchButton.addEventListener("click", async () => {
     const query = searchField.value.trim();
+    let articles = [];
+
     if (query !== "") {
         try {
             // Fetch news based on the search query
-            const articles = await fetchSearchNews(query);
-            // Display the fetched articles
-            displayBlogs(articles);
+            articles = await fetchSearchNews(query);
         } catch (error) {
             console.error("Error fetching news by query", error);
         }
     } else {
-        // Optional: Fetch and display the latest news if the search query is empty
         try {
-            const articles = await fetchLatestNews();
-            displayBlogs(articles);
+            // Fetch and display the latest news if the search query is empty
+            articles = await fetchLatestNews();
         } catch (error) {
             console.error("Error fetching latest news", error);
         }
     }
+
+    // Remove duplicates before displaying
+    const uniqueArticles = removeDuplicates(articles);
+    displayBlogs(uniqueArticles);
 });
 
 // Fetch and display the latest news on initial page load
 (async () => {
     try {
         const articles = await fetchLatestNews();
-        displayBlogs(articles);
+        // Remove duplicates before displaying
+        const uniqueArticles = removeDuplicates(articles);
+        displayBlogs(uniqueArticles);
     } catch (error) {
         console.error("Error fetching latest news on initial load", error);
     }
